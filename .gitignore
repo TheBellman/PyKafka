@@ -1,0 +1,9 @@
+.idea
+.DS_Store
+*.iml
+venv/
+logs/
+build/
+PyKafka.egg-info/
+dist/
+__pycache__
