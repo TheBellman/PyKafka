@@ -20,6 +20,32 @@ Finally, this assumes that you have a topic in your target cluster called `pykaf
 ```
 
 ## Test and Build
+To do a basic installation that allows you to execute the tool, check it out, pull down the requirements, and go:
+
+```shell
+% git clone git@github.com:TheBellman/PyKafka.git
+% cd PyKafka
+% virtualenv venv
+% . venv/bin/activate
+(venv) % python -m pip install --upgrade pip
+(venv) % pip install -r requirements.txt
+(venv) % pip install --editable .
+(venv) % pykafka
+Usage: pykafka [OPTIONS] COMMAND [ARGS]...
+
+  Simple demonstration of using Kafka producers/consumers.
+
+Options:
+  --bootstrap-server TEXT  Where to find kafka, assumed to be host:port
+  --topic TEXT             The target topic to use
+  --help                   Show this message and exit.
+
+Commands:
+  consume
+  produce
+(venv) %
+```
+
 T.B.C.
 
 ## Usage
@@ -57,7 +83,33 @@ Options:
   --count INTEGER  Number of messages to produce
   --help           Show this message and exit.
 ```
-T.B.C.
+
+Getting that far allows you to run the tests:
+
+```shell
+(venv )% pytest
+================================== test session starts ===================================
+platform darwin -- Python 3.9.0, pytest-7.2.0, pluggy-1.0.0
+rootdir: /Users/robert/Projects/tmp/PyKafka
+collected 2 items                                                                        
+
+tests/pykafka/test_Config.py ..                                                    [100%]
+
+=================================== 2 passed in 0.01s ====================================
+```
+
+To build a distributable Wheel file:
+
+```shell
+(venv) % python -m build . --wheel
+```
+
+will result in the Wheel file being found in the `dist` directory:
+
+```shell
+(venv) % ls dist
+pykafka-1.0.0a1-py3-none-any.whl
+```
 
 ## ToDo
 Next steps for enhancement are:
@@ -70,12 +122,6 @@ Next steps for enhancement are:
 - convert to using Avro
 - provide the Schema Registry URL on the command line, optionally
 - finish this README
-
-### Notes
-To build : `python -m build . --wheel`
-which presumes: `pip install build`
-for testing and dev ` pip install --editable .`
-to test: pytest
 
 ## License
 
