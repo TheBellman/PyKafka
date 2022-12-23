@@ -75,6 +75,7 @@ Next steps for enhancement are:
 To build : `python -m build . --wheel`
 which presumes: `pip install build`
 for testing and dev ` pip install --editable .`
+to test: pytest
 
 ## License
 
