@@ -14,3 +14,11 @@ class DataStream(ABC):
         :return: the list containing count items
         """
         pass
+
+    @abstractmethod
+    def data_stream(self):
+        """
+        return the data via a generator
+        :return: a generator that produces data
+        """
+        pass

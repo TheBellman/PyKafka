@@ -11,4 +11,8 @@ class StringDataStream(DataStream):
         self.fake = Faker()
 
     def data_list(self, count):
-        return [self.fake.name() for _ in range(count)]
+        return [next(self.data_stream()) for _ in range(count)]
+
+    def data_stream(self):
+        while True:
+            yield self.fake.name()
