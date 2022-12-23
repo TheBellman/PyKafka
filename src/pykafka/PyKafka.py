@@ -15,8 +15,9 @@ pass_config = click.make_pass_decorator(Config, ensure=True)
 
 
 @click.group()
-@click.option('--bootstrap-server', default='localhost:9092', help='Where to find kafka, assumed to be host:port')
-@click.option('--topic', default='pykafka', help='The target topic to use')
+@click.option('--bootstrap-server', default='localhost:9092', help='Where to find kafka, assumed to be host:port'
+                                                                   ' (defaults to locahost:9092)')
+@click.option('--topic', default='pykafka', help='The target topic to use (defaults to pykafka)')
 @pass_config
 def cli(config: Config, bootstrap_server: str, topic: str):
     """
@@ -42,7 +43,3 @@ def consume(config: Config):
     logging.info('Started')
     logging.info(f'Consuming with topic={config.topic}, bootstrap={config.bootstrap}')
     logging.info('Stopped')
-
-
-if __name__ == "__main__":
-    cli()
