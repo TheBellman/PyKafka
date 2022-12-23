@@ -10,10 +10,11 @@ class KafkaProducer:
     """
     This class uses the supplied configuration and a data stream to write to kafka.
     """
-
     def __init__(self, config: Config, datastream: DataStream):
         self.config = config
         self.datastream = datastream
+        self.errors = 0
+        self.success = 0
         self.producer = Producer(
             {
                 'bootstrap.servers': config.bootstrap,
@@ -28,16 +29,19 @@ class KafkaProducer:
         logging.info('Started')
 
         for _ in range(self.config.count):
-            name = next(self.datastream.data_stream())
-            self.producer.produce(self.config.topic, key=str(uuid.uuid4()), value=name, callback=self.error_logger)
-            logging.info(f'name = {name}')
+            self.producer.produce(
+                self.config.topic,
+                key=str(uuid.uuid4()),
+                value=next(self.datastream.data_stream()),
+                callback=self.error_logger)
 
         self.producer.flush()
         self.datastream.data_stream().close()
-        logging.info('Stopped')
+        logging.info(f'Stopped - {self.errors} errors, {self.success} sent')
 
-    @staticmethod
-    def error_logger(err, _):
+    def error_logger(self, err, _):
         if err is not None:
+            self.errors += 1
             logging.error(f'Failed to send message: {str(err)}')
-
+        else:
+            self.success += 1

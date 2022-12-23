@@ -138,8 +138,6 @@ pykafka-1.0.0a1-py3-none-any.whl
 ## ToDo
 Next steps for enhancement are:
 
-- setup a data source
-- create the Producer
 - create the Consumer
 - provide the target topic on the command line, optionally
 - try to create a topic if it doesn't already exist
