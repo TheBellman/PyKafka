@@ -17,7 +17,7 @@ class DataStream(ABC):
         pass
 
     @abstractmethod
-    def data_stream(self) -> Generator[Any]:
+    def data_stream(self) -> Generator[Any, None, None]:
         """
         return the data via a generator
         :return: a generator that produces data

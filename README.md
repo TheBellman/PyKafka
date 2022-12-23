@@ -95,6 +95,28 @@ collected 2 items
 tests/pykafka/test_Config.py ..                                                    [100%]
 
 =================================== 2 passed in 0.01s ====================================
+
+(venv) % pytest --mypy          
+========================================== test session starts ===========================================
+platform darwin -- Python 3.9.0, pytest-7.2.0, pluggy-1.0.0
+rootdir: /Users/robert/Projects/python/PyKafka
+plugins: mypy-0.10.3, Faker-15.3.4
+collected 15 items                                                                                       
+
+src/pykafka/__init__.py ..                                                                         [ 13%]
+src/pykafka/Config.py .                                                                            [ 20%]
+src/pykafka/DataStream.py .                                                                        [ 26%]
+src/pykafka/Producer.py .                                                                          [ 33%]
+src/pykafka/PyKafka.py .                                                                           [ 40%]
+src/pykafka/StringDataStream.py .                                                                  [ 46%]
+tests/__init__.py .                                                                                [ 53%]
+tests/conftest.py .                                                                                [ 60%]
+tests/pykafka/test_Config.py ...                                                                   [ 80%]
+tests/pykafka/test_StringDataStream.py ...                                                         [100%]
+================================================== mypy ==================================================
+
+Success: no issues found in 10 source files
+=========================================== 15 passed in 0.68s ===========================================
 ```
 
 To build a distributable Wheel file:

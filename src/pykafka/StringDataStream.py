@@ -17,6 +17,6 @@ class StringDataStream(DataStream):
     def data_list(self, count: int) -> list[str]:
         return [next(self.data_stream()) for _ in range(count)]
 
-    def data_stream(self) -> Generator[str]:
+    def data_stream(self) -> Generator[str, None, None]:
         while True:
             yield self.fake.name()
