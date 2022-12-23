@@ -1,6 +1,7 @@
 import logging
 import click
 from pykafka.Config import Config
+from pykafka.KafkaConsumer import KafkaConsumer
 from pykafka.KafkaProducer import KafkaProducer
 from pykafka.StringDataStream import StringDataStream
 
@@ -36,11 +37,12 @@ def produce(config: Config, count: int):
     producer.execute()
 
 
-if __name__ == '__main__':
-    cli()
 @cli.command()
 @pass_config
 def consume(config: Config):
-    logging.info('Started')
-    logging.info(f'Consuming with topic={config.topic}, bootstrap={config.bootstrap}')
-    logging.info('Stopped')
+    consumer = KafkaConsumer(config)
+    consumer.execute()
+
+
+if __name__ == '__main__':
+    cli()
