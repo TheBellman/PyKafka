@@ -1,7 +1,7 @@
 import logging
 import click
 from pykafka.Config import Config
-from pykafka.Producer import Producer
+from pykafka.KafkaProducer import KafkaProducer
 from pykafka.StringDataStream import StringDataStream
 
 logging.basicConfig(
@@ -28,15 +28,16 @@ def cli(config: Config, bootstrap_server: str, topic: str):
 
 
 @cli.command()
-@click.option('--count', default=100, help='Number of messages to produce')
+@click.option('--count', default=100, help='Number of messages to produce (default 100)')
 @pass_config
 def produce(config: Config, count: int):
     config.count = count
-    datastream = StringDataStream()
-    producer = Producer(config, datastream)
+    producer = KafkaProducer(config, StringDataStream())
     producer.execute()
 
 
+if __name__ == '__main__':
+    cli()
 @cli.command()
 @pass_config
 def consume(config: Config):

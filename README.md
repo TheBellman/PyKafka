@@ -17,7 +17,7 @@ Finally, this assumes that you have a topic in your target cluster called `pykaf
     --create \
     --replication-factor 1 \
     --partitions 1 \ 
-    --topic names
+    --topic pykafka
 ```
 
 ## Test and Build
