@@ -35,8 +35,13 @@ class KafkaProducer:
                 value=next(self.datastream.data_stream()),
                 callback=self.error_logger)
 
+        # Block until the messages are sent.
+        remaining = self.producer.poll(10)
+        if remaining > 0:
+            logging.warning(f'{remaining} messages were still in the queue waiting to go')
         self.producer.flush()
         self.datastream.data_stream().close()
+
         logging.info(f'Stopped - {self.errors} errors, {self.success} sent')
 
     def error_logger(self, err, _):

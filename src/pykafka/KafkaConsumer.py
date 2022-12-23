@@ -39,6 +39,7 @@ class KafkaConsumer:
             while self.running:
                 msg = self.consumer.poll(timeout=1.0)
                 if msg is None:
+                    logging.info('waiting...')
                     continue
 
                 if msg.error():
@@ -48,10 +49,12 @@ class KafkaConsumer:
                         raise KafkaException(msg.error())
                 else:
                     # msg reports the strings that we sent in as a byte array
-                    logging.info(f'{msg.key().decode()} : {msg.value().decode()}')
+                    logging.info(f'{msg.key().decode("utf-8")} : {msg.value().decode("utf-8")}')
                     msg_count += 1
                     if msg_count % MIN_COMMIT_COUNT == 0:
                         self.consumer.commit(asynchronous=True)
+        except KeyboardInterrupt:
+            self.shutdown()
         finally:
             self.consumer.close()
         logging.info('Stopped')
