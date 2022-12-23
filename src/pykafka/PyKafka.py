@@ -1,6 +1,8 @@
 import logging
 import click
 from pykafka.Config import Config
+from pykafka.Producer import Producer
+from pykafka.StringDataStream import StringDataStream
 
 logging.basicConfig(
     level=logging.INFO,
@@ -16,7 +18,7 @@ pass_config = click.make_pass_decorator(Config, ensure=True)
 @click.option('--bootstrap-server', default='localhost:9092', help='Where to find kafka, assumed to be host:port')
 @click.option('--topic', default='pykafka', help='The target topic to use')
 @pass_config
-def cli(config, bootstrap_server, topic):
+def cli(config: Config, bootstrap_server: str, topic: str):
     """
     Simple demonstration of using Kafka producers/consumers.
     """
@@ -27,16 +29,16 @@ def cli(config, bootstrap_server, topic):
 @cli.command()
 @click.option('--count', default=100, help='Number of messages to produce')
 @pass_config
-def produce(config, count):
+def produce(config: Config, count: int):
     config.count = count
-    logging.info('Started')
-    logging.info(f'Executing with count={config. count}, topic={config.topic}, bootstrap={config.bootstrap}')
-    logging.info('Stopped')
+    datastream = StringDataStream()
+    producer = Producer(config, datastream)
+    producer.execute()
 
 
 @cli.command()
 @pass_config
-def consume(config):
+def consume(config: Config):
     logging.info('Started')
     logging.info(f'Consuming with topic={config.topic}, bootstrap={config.bootstrap}')
     logging.info('Stopped')
