@@ -1,6 +1,9 @@
 # PyKafka
 Simple Python code to demonstrate working with Kafka and Avro
 
+![PyTest](https://github.com/TheBellman/PyKafka/workflows/PyTest/badge.svg?branch=main)
+
+
 ## Prerequisites
 This project assumes that:
 
