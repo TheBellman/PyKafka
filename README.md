@@ -5,7 +5,8 @@ Simple Python code to demonstrate working with Kafka and Avro
 This project assumes that:
 
 - git is installed and available in the command path.
-- To be completed
+- Python 3.9 or better is installed
+  - `virtualenv` and `pip` are available
 
 It also pretty well assumes you have a schema registry and Kafka cluster available for use. The easiest way to achieve that is to use the [confluentinc/cp-all-in-one](https://github.com/confluentinc/cp-all-in-one) project with Docker (yes, you will need Docker as well) which can run up an ensemble including Kafka and the Confluent schema registry on your desktop. Use of this project is also discussed at [Confluent](https://docs.confluent.io/platform/current/tutorials/build-your-own-demos.html)
 
@@ -46,8 +47,6 @@ Commands:
 (venv) %
 ```
 
-T.B.C.
-
 ## Usage
 Executing with `--help`, or with no options, the toy will report its usage.
 
@@ -87,7 +86,7 @@ Options:
 Getting that far allows you to run the tests:
 
 ```shell
-(venv )% pytest
+(venv) % pytest
 ================================== test session starts ===================================
 platform darwin -- Python 3.9.0, pytest-7.2.0, pluggy-1.0.0
 rootdir: /Users/robert/Projects/tmp/PyKafka
