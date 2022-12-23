@@ -2,7 +2,10 @@ import os
 from setuptools import setup, find_packages
 
 with open("README.md") as stream:
-    long_description = stream.read()
+    readme = stream.read()
+
+with open('LICENSE') as stream:
+    licence = stream.read()
 
 # read in the dependencies from the virtualenv requirements file
 dependencies = []
@@ -17,11 +20,11 @@ setup(
     name='PyKafka',
     version='1.0.0a1',
     description='Simple demonstration of Kafka with Avro',
-    long_description=long_description,
+    long_description=readme,
     author='Robert Hook',
     author_email='rahook@gmail.com',
     url='https://github.com/TheBellman/PyKafka',
-    license='License :: OSI Approved :: Apache Software License',
+    license=licence,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
@@ -34,12 +37,12 @@ setup(
         'Documentation': 'https://github.com/TheBellman/PyKafka',
         'Source': 'https://github.com/TheBellman/PyKafka',
     },
-    packages=find_packages(include=['pykafka', 'pykafka.*']),
+    packages=find_packages(exclude=['tests', 'docs']),
     install_requires=dependencies,
     python_requires='>=3.9.*',
     entry_points={
         "console_scripts": [
-            "PyKafka=pykafka.PyKafka:main",
+            "PyKafka=pykafka.PyKafka:cli",
         ]
     },
 )

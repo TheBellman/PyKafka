@@ -4,6 +4,6 @@
 venv/
 logs/
 build/
-PyKafka.egg-info/
+*.egg-info
 dist/
 __pycache__

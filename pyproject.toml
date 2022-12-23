@@ -1,0 +1,4 @@
+# https://godatadriven.com/blog/a-practical-guide-to-setuptools-and-pyproject-toml/
+[build-system]
+requires = ["setuptools>=54.0.0"]
+build-backend = "setuptools.build_meta"
