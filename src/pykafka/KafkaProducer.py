@@ -4,7 +4,6 @@ import uuid
 from pykafka.Config import Config
 from pykafka.DataStream import DataStream
 from confluent_kafka import Producer
-from importlib.resources import files
 
 
 class KafkaProducer:
@@ -22,8 +21,6 @@ class KafkaProducer:
                 'client.id': socket.gethostname()
             }
         )
-        # avro_schema = files('pykafka.avro').joinpath('customer.avsc').read_text()
-        # logging.info("woo hoo")
 
     def execute(self):
         """

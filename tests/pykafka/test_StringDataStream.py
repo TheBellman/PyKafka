@@ -1,4 +1,6 @@
 import pytest
+
+from pykafka.DataStream import DataStream
 from pykafka.StringDataStream import StringDataStream
 
 
@@ -14,7 +16,7 @@ def test_string_data_list(data_stream):
         assert item is not None
 
 
-def test_string_data_stream(data_stream):
+def test_string_data_stream(data_stream: DataStream):
     result = [next(data_stream.data_stream()) for _ in range(10)]
     assert len(result) == 10
     for item in result:
