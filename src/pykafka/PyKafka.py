@@ -1,17 +1,9 @@
-import logging
 import click
 from pykafka.Config import Config
 from pykafka.KafkaConsumer import KafkaConsumer
 from pykafka.KafkaProducer import KafkaProducer
-from pykafka.StringDataStream import StringDataStream
+from pykafka.CustomerDataStream import CustomerDataStream
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.StreamHandler()
-    ]
-)
 pass_config = click.make_pass_decorator(Config, ensure=True)
 
 
@@ -33,7 +25,7 @@ def cli(config: Config, bootstrap_server: str, topic: str):
 @pass_config
 def produce(config: Config, count: int):
     config.count = count
-    producer = KafkaProducer(config, StringDataStream())
+    producer = KafkaProducer(config, CustomerDataStream())
     producer.execute()
 
 

@@ -125,14 +125,15 @@ Success: no issues found in 10 source files
 To build a distributable Wheel file:
 
 ```shell
-(venv) % python -m build . --wheel
+(venv) % python -m build
 ```
 
-will result in the Wheel file being found in the `dist` directory:
+will result in the distribution files being found in the `dist` directory:
 
 ```shell
-(venv) % ls dist
+(venv) % ls -1 dist
 pykafka-1.0.0a1-py3-none-any.whl
+pykafka-1.0.0a1.tar.gz
 ```
 
 ## ToDo

@@ -2,8 +2,9 @@ import logging
 import socket
 import uuid
 from pykafka.Config import Config
+from pykafka.CustomerSchema import CustomerSchema
 from pykafka.DataStream import DataStream
-from confluent_kafka import Producer
+from confluent_kafka.avro import AvroProducer
 
 
 class KafkaProducer:
@@ -15,11 +16,19 @@ class KafkaProducer:
         self.datastream = datastream
         self.errors = 0
         self.success = 0
-        self.producer = Producer(
-            {
-                'bootstrap.servers': config.bootstrap,
-                'client.id': socket.gethostname()
-            }
+
+        customer_schema = CustomerSchema()
+        key_schema, value_schema = customer_schema.schema()
+
+        producer_config = {
+            'bootstrap.servers': config.bootstrap,
+            'schema.registry.url': config.schema_registry,
+            'client.id': socket.gethostname()
+        }
+        self.producer = AvroProducer(
+            producer_config,
+            default_key_schema=key_schema,
+            default_value_schema=value_schema
         )
 
     def execute(self):
@@ -30,7 +39,7 @@ class KafkaProducer:
 
         for _ in range(self.config.count):
             self.producer.produce(
-                self.config.topic,
+                topic=self.config.topic,
                 key=str(uuid.uuid4()),
                 value=next(self.datastream.data_stream()),
                 callback=self.error_logger)

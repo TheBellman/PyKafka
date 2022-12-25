@@ -4,4 +4,5 @@ setuptools >= 65.0.0
 faker >= 15.3.0
 pytest-mypy >= 0.10.3
 confluent-kafka[avro] >= 1.9.2
+avro-python3 >= 1.10.2
 build
