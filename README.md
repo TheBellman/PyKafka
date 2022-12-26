@@ -136,16 +136,6 @@ pykafka-1.0.0a1-py3-none-any.whl
 pykafka-1.0.0a1.tar.gz
 ```
 
-## ToDo
-Next steps for enhancement are:
-
-- create the Consumer
-- provide the target topic on the command line, optionally
-- try to create a topic if it doesn't already exist
-- convert to using Avro
-- provide the Schema Registry URL on the command line, optionally
-- finish this README
-
 ## License
 
 Copyright 2022 Little Dog Digital
