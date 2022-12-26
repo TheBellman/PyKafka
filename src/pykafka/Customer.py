@@ -11,7 +11,7 @@ class Customer:
     name: str
 
 
-def customer_to_dict(customer: Customer, ctx: SerializationContext) -> dict[str, any]:
+def customer_to_dict(customer: Customer, ctx: SerializationContext) -> dict[str, Any]:
     return dict(
         id=customer.id,
         name=customer.name
