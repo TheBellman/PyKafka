@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import Any
+
 from confluent_kafka.serialization import SerializationContext
 
 
