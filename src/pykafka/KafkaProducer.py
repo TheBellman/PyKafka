@@ -23,7 +23,8 @@ class KafkaProducer:
         producer_config = {
             'bootstrap.servers': config.bootstrap,
             'schema.registry.url': config.schema_registry,
-            'client.id': socket.gethostname()
+            'client.id': socket.gethostname(),
+            'session.timeout.ms': 6000
         }
         self.producer = AvroProducer(
             producer_config,
