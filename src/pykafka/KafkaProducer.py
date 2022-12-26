@@ -7,7 +7,7 @@ from pykafka.CustomerSchema import CustomerSchema
 from pykafka.DataStream import DataStream
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer
-from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
+from confluent_kafka.serialization import SerializationContext, MessageField
 from confluent_kafka import Producer
 
 
