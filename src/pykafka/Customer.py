@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from confluent_kafka.serialization import SerializationContext
 
+
 @dataclass
 class Customer:
     """

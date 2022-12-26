@@ -2,9 +2,13 @@ import logging
 import socket
 import uuid
 from pykafka.Config import Config
+from pykafka.Customer import customer_to_dict
 from pykafka.CustomerSchema import CustomerSchema
 from pykafka.DataStream import DataStream
-from confluent_kafka.avro import AvroProducer
+from confluent_kafka.schema_registry import SchemaRegistryClient
+from confluent_kafka.schema_registry.avro import AvroSerializer
+from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
+from confluent_kafka import Producer
 
 
 class KafkaProducer:
@@ -12,6 +16,7 @@ class KafkaProducer:
     This class uses the supplied configuration and a data stream to write to kafka.
     see <https://github.com/confluentinc/confluent-kafka-python/blob/master/examples/avro_producer.py>
     """
+
     def __init__(self, config: Config, datastream: DataStream):
         self.config = config
         self.datastream = datastream
@@ -21,17 +26,20 @@ class KafkaProducer:
         customer_schema = CustomerSchema()
         key_schema, value_schema = customer_schema.schema()
 
-        producer_config = {
-            'bootstrap.servers': config.bootstrap,
-            'schema.registry.url': config.schema_registry,
-            'client.id': socket.gethostname(),
-            'session.timeout.ms': 6000
-        }
-        self.producer = AvroProducer(
-            producer_config,
-            default_key_schema=key_schema,
-            default_value_schema=value_schema
+        schema_registry_client = SchemaRegistryClient({
+            'url': config.schema_registry
+        })
+
+        self.avro_serializer = AvroSerializer(
+            schema_registry_client,
+            value_schema,
+            customer_to_dict
         )
+
+        self.producer = Producer({
+            'bootstrap.servers': config.bootstrap,
+            'client.id': socket.gethostname()
+        })
 
     def execute(self):
         """
@@ -39,23 +47,26 @@ class KafkaProducer:
         """
         logging.info('Started')
 
-        # for _ in range(self.config.count):
-        #     self.producer.produce(
-        #         topic=self.config.topic,
-        #         key=str(uuid.uuid4()),
-        #         value=next(self.datastream.data_stream()),
-        #         callback=self.error_logger)
-        #
-        # # Block until the messages are sent.
-        # remaining = self.producer.poll(10)
-        # if remaining > 0:
-        #     logging.warning(f'{remaining} messages were still in the queue waiting to go')
-        # self.producer.flush()
+        for _ in range(self.config.count):
+            customer = next(self.datastream.data_stream())
+            key = str(uuid.uuid4())
+            self.producer.produce(
+                topic=self.config.topic,
+                key=key,
+                value=self.avro_serializer(customer, SerializationContext(self.config.topic, MessageField.VALUE)),
+                on_delivery=self.send_report
+            )
+
+        # Block until the messages are sent.
+        remaining = self.producer.poll(10)
+        if remaining > 0:
+            logging.warning(f'{remaining} messages were still in the queue waiting to go')
+        self.producer.flush()
         self.datastream.data_stream().close()
 
         logging.info(f'Stopped - {self.errors} errors, {self.success} sent')
 
-    def error_logger(self, err, _):
+    def send_report(self, err, _):
         if err is not None:
             self.errors += 1
             logging.error(f'Failed to send message: {str(err)}')
