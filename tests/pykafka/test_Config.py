@@ -24,4 +24,5 @@ def test_full_config(full_config):
     assert full_config.bootstrap == 'localhost:9092'
     assert full_config.topic == 'test'
     assert full_config.schema_registry == 'http://localhost:8081'
-
+    assert str(full_config)\
+           == "Config(bootstrap='localhost:9092', topic='test', count=500, schema_registry='http://localhost:8081')"
