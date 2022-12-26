@@ -30,8 +30,6 @@ dependencies = [
     "click >= 8.1.0",
     "faker >= 15.3.0",
     "confluent-kafka >= 1.9.2",
-    "avro == 1.10.0",
-#    "avro-python3 >= 1.10.2",
     "pytest >= 7.2.0",
     "pytest-mypy >= 0.10.3"
 ]

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+from confluent_kafka.serialization import SerializationContext
 
 @dataclass
 class Customer:
@@ -8,3 +8,10 @@ class Customer:
     """
     id: str
     name: str
+
+
+def customer_to_dict(customer: Customer, ctx: SerializationContext) -> dict[str, any]:
+    return dict(
+        id=customer.id,
+        name=customer.name
+    )

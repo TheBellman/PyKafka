@@ -10,6 +10,7 @@ from confluent_kafka.avro import AvroProducer
 class KafkaProducer:
     """
     This class uses the supplied configuration and a data stream to write to kafka.
+    see <https://github.com/confluentinc/confluent-kafka-python/blob/master/examples/avro_producer.py>
     """
     def __init__(self, config: Config, datastream: DataStream):
         self.config = config
@@ -38,18 +39,18 @@ class KafkaProducer:
         """
         logging.info('Started')
 
-        for _ in range(self.config.count):
-            self.producer.produce(
-                topic=self.config.topic,
-                key=str(uuid.uuid4()),
-                value=next(self.datastream.data_stream()),
-                callback=self.error_logger)
-
-        # Block until the messages are sent.
-        remaining = self.producer.poll(10)
-        if remaining > 0:
-            logging.warning(f'{remaining} messages were still in the queue waiting to go')
-        self.producer.flush()
+        # for _ in range(self.config.count):
+        #     self.producer.produce(
+        #         topic=self.config.topic,
+        #         key=str(uuid.uuid4()),
+        #         value=next(self.datastream.data_stream()),
+        #         callback=self.error_logger)
+        #
+        # # Block until the messages are sent.
+        # remaining = self.producer.poll(10)
+        # if remaining > 0:
+        #     logging.warning(f'{remaining} messages were still in the queue waiting to go')
+        # self.producer.flush()
         self.datastream.data_stream().close()
 
         logging.info(f'Stopped - {self.errors} errors, {self.success} sent')
