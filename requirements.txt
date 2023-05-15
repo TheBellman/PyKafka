@@ -6,3 +6,4 @@ pytest-mypy >= 0.10.3
 confluent-kafka >= 1.9.2
 fastavro >= 1.7.0
 build
+requests >= 2.3.0

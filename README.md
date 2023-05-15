@@ -50,6 +50,25 @@ Commands:
 (venv) %
 ```
 
+To execute tests:
+
+```shell
+% python -m pytest
+================ test session starts ================
+platform darwin -- Python 3.10.5, pytest-7.3.1, pluggy-1.0.0
+rootdir: /Users/robert.hook/Projects/PyKafka
+plugins: mypy-0.10.3, Faker-18.7.0
+collected 11 items                                                                                                                                                                                         
+
+tests/pykafka/test_Config.py ..               [ 18%]
+tests/pykafka/test_Customer.py ....           [ 54%]
+tests/pykafka/test_CustomerDataStream.py ..   [ 72%]
+tests/pykafka/test_CustomerSchema.py .        [ 81%]
+tests/pykafka/test_StringDataStream.py .. 
+
+================ 11 passed in 0.49s ================
+```
+
 ## Usage
 Executing with `--help`, or with no options, the toy will report its usage.
 
